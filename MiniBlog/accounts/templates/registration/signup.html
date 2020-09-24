@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+    
+    {% if messages %}
+        
+        {% for message in messages %}
+            <p {% if message.tags %}
+              class="alert alert-{{message.tags}}"{% endif %}> {{message}} </p>
+            
+        {% endfor %}
+            
+    {% endif %}
+        
+    <form method="POST" style="margin:auto; margin-top:40px;">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" class="btn btn-success" style="width:100%;" value="Signup"/>
+    </form>
+{% endblock %}

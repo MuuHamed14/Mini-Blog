@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <h1 class="text-white my-5"  style="margin:auto;"> Home Page </h3>
+        {% for post in posts  %}
+          
+        <div class="jumbotron jumbotron-fluid jumbo-color">
+              <div class="container">
+                <h4 class="display-4  text-center" style="margin-top: -40px; color:orange"> {{post}} </h1><br>
+                <p class="lead" style="color:lightseagreen;"> {{post.desc|truncatewords:40}} </p>
+                <a href="{% url 'Mini-Blog:detail_post' post.id %}" class="btn btn-primary" style="margin-left:500px;">   Read More</a>
+              </div>
+        </div>
+        {% endfor %} 
+    </div>
+    <nav aria-label="doctor-pagination" style="margin-left:445px; margin-bottom:60px;">
+      <ul class="pagination">
+          <!-- Start Of Previous -->
+              {% if posts.has_previous %}
+                  <li class="page-item">
+                      <a class="page-link" href="?page={{posts.previous_page_number}}"> Previous </a>
+                  </li>
+              {% else %}
+                  <li class="page-item disabled">
+                      <a class="page-link"> Previous </a>
+                  </li>
+              {% endif %}
+          <!-- End Of Previous -->
+  
+          <!-- Start Of Loop -->
+              {% for page_num in posts.paginator.page_range %}
+                  {% if posts_num == page_num %}
+                      <li class="page-item active">
+                           {{page_num}
+                          <span class="sr-only">(current)</span>
+                      </li>
+                  {% else %}
+                      <li class="page-item">
+                          <a class="page-link" href="?page={{page_num}}"> {{page_num}} </a>
+                      </li>
+                  {% endif %}
+              {% endfor %}
+           <!-- Start Of Loop -->
+  
+  
+           <!-- Start Of Next -->
+              {% if posts.has_next %}
+                  <li class="page-item">
+                      <a class="page-link" href="?page={{posts.next_page_number}}"> Next </a>
+                  </li>
+              {% else %}
+                  <li class="page-item disabled">
+                      <a class="page-link"> Next </a>
+                  </li>
+              {% endif %}
+          <!-- End Of Next -->
+{% endblock %}

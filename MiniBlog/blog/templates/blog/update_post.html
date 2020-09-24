@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="col-sm-10">
+        <h1 class="text-white my-5" style="margin:auto; "> Dashboard / Update Post </h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Update Post" class="btn btn-success">
+            <a href="{% url 'Mini-Blog:dashboard' %}" class="btn btn-danger"> Cancel </a>
+        </form>    
+    </div>
+{% endblock %}

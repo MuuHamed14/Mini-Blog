@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="col-sm-10">
+        <h1 class="text-white my-5" style="margin-left:360px;"> DashBoard Page </h3>
+         <a href="{% url 'Mini-Blog:add_post' %}" class="btn btn-success" style="margin-left:310px; width:40%;"> Add New Post </a>   
+        <h4 class="text-center alert alert-info mt-3" style="margin-left:80px;" > Show Post Information </h4>
+        
+        {% if posts %}
+            <table class="text-center table table-hover bg-white;" style="margin-left:40px;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width:2%;"> ID </th>
+                        <th scope="col" style="width:28%;"> Title </th>
+                        <th scope="col" style="width:55%;"> Description </th>  
+                        <th scope="col" style="width:15%;"> Action </th>                                              
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in posts  %}
+                    <tr>
+                        <th scope="row"> {{post.id}} </th>
+                        <td> {{post.title}} </td>
+                        <td> {{post.desc|truncatewords:8}} </td>
+                        
+                        <td class="text-center">
+                            {% if post.created_by == request.user %}
+                            <a href="{% url 'Mini-Blog:update_post' post.id %}" class="btn btn-warning btn-sm"> Edit </a>
+                            <a href="{% url 'Mini-Blog:delete_post' post.id %}" class="btn btn-danger btn-sm d-inline"> Delete </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h4 class="text-center alert alert-warning"> No Records </h4>    
+        {% endif %}
+    </div>
+ 
+    <nav aria-label="doctor-pagination" style="margin-left:415px; margin-bottom:40px;">
+        <ul class="pagination">
+            <!-- Start Of Previous -->
+                {% if posts.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{posts.previous_page_number}}"> Previous </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link"> Previous </a>
+                    </li>
+                {% endif %}
+            <!-- End Of Previous -->
+    
+            <!-- Start Of Loop -->
+                {% for page_num in posts.paginator.page_range %}
+                    {% if posts_num == page_num %}
+                        <li class="page-item active">
+                             {{page_num}
+                            <span class="sr-only">(current)</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{page_num}}"> {{page_num}} </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+             <!-- Start Of Loop -->
+    
+    
+             <!-- Start Of Next -->
+                {% if posts.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{posts.next_page_number}}"> Next </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link"> Next </a>
+                    </li>
+                {% endif %}
+            <!-- End Of Next -->       
+
+{% endblock %}

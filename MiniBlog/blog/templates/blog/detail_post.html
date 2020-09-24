@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="row">          
+        <div class="jumbotron jumbotron-fluid jumbo-color" style="margin-top: 60px;">
+              <div class="container">
+                <h4 class="display-4  text-center" style="margin-top: -40px;"> {{posts}} </h1><br>
+                <p class="lead" style="color:lightseagreen;"> {{posts.desc}} </p>
+              </div>
+        </div> 
+    </div>
+{% endblock %}
